@@ -1,0 +1,40 @@
+tags$head(
+  tags$style(HTML("
+    .help-content {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .help-content h1, .help-content h2, .help-content h3 {
+      color: #2c3e50;
+    }
+    .help-content p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .help-content ul, .help-content ol {
+      margin-left: 20px;
+    }
+    /* Additional styling as needed */
+  "))
+)
+
+
+.square-plot-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* This creates a 1:1 aspect ratio */
+}
+
+.square-plot-container .shiny-plot-output {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.tab-pane {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+}

@@ -1,4 +1,4 @@
-# modules/plots_server.R
+## modules/plots_server.R
 
 plots_server <- function(input, output, session, obj) {
   ns <- session$ns
@@ -72,17 +72,16 @@ plots_server <- function(input, output, session, obj) {
         } else {
           colors <- brewer.pal(9, palette_name)[start_break:9]
         }
-        # it works
+        # Generate FeaturePlot
         plot <- FeaturePlot(obj(), features = input$gene, reduction = "umap", cols = colors)
         
-        
       } else {
-        plot <- make_umap_plot(obj, input$groupBy)  
+        plot <- make_umap_plot(obj(), input$groupBy)  
       }
     } else if (input$plotType == "Ridge Plot") {
       req(input$ridgeGenes)
       group.by <- input$ridgeGroupBy
-      plot <- make_ridge_plot(obj, input$ridgeGenes, group.by, length(input$ridgeGenes))  
+      plot <- make_ridge_plot(obj(), input$ridgeGenes, group.by, length(input$ridgeGenes))  
       
     } else if (input$plotType == "Elbow Plot") {
       plot <- make_elbow_plot(obj())
@@ -129,7 +128,6 @@ plots_server <- function(input, output, session, obj) {
       plot_object(plot)
       print(plot)
     } 
-    
     
     plot_object(plot)
     print(plot)

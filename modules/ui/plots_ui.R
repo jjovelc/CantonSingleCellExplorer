@@ -1,21 +1,20 @@
-# modules/plots_ui.R
+# modules/ui/plots_ui.R
 
 plots_ui <- function(id) {
   ns <- NS(id)
   
   tagList(
-    # # CSS
+    # CSS
     tags$head(
       tags$style(HTML("
-    
         h3 {
-        font-size: 26px;
+          font-size: 26px;
         }
         .well {
-         color: black;
-         background-color: gray100;
+          color: black;
+          background-color: gray100;
         }
-                    "))
+      "))
     ),
     sidebarLayout(
       sidebarPanel(
@@ -29,13 +28,12 @@ plots_ui <- function(id) {
                          options = list(placeholder = "Select or search gene names",
                                         maxOptions = 30000,
                                         searchConjunction = 'and')),
-          selectInput(ns("ridgeGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type_v2"))
+          selectInput(ns("ridgeGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type"))
         ), 
-        
         
         conditionalPanel(
           condition = sprintf("input['%s'] == 'UMAP'", ns("plotType")),
-          selectInput(ns("groupBy"), "Group By:", choices = c("seurat_clusters", "cell_type_v2", "gene")),
+          selectInput(ns("groupBy"), "Group By:", choices = c("seurat_clusters", "cell_type", "gene")),
           conditionalPanel(
             condition = sprintf("input['%s'] == 'gene'", ns("groupBy")),
             selectizeInput(ns("gene"), "Select Gene:", choices = NULL, multiple = TRUE,
@@ -59,16 +57,6 @@ plots_ui <- function(id) {
           numericInput(ns("numDims"), "Number of Dimensions:", value = 20, min = 5, max = 30, step = 1)
         ),
         
-        # Ridge plot
-        conditionalPanel(
-          condition = sprintf("input['%s'] == 'Ridge Plot'", ns("plotType")),
-          selectizeInput(ns("ridgeGenes"), "Select Genes for Ridge Plot:", choices = NULL, multiple = TRUE, 
-                         options = list(placeholder = "Select or search gene names",
-                                        maxOptions = 30000,
-                                        searchConjunction = 'and')),
-          selectInput(ns("ridgeGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type_v2"))
-        ),
-        
         # Scatter plot
         conditionalPanel(
           condition = sprintf("input['%s'] == 'Scatter Plot'", ns("plotType")),
@@ -76,10 +64,8 @@ plots_ui <- function(id) {
                       choices = c("nCount_RNA", "nFeature_RNA", "percent.mt")),
           selectInput(ns("feat2"), "Select Feature 2", 
                       choices = c("nCount_RNA", "nFeature_RNA", "percent.mt")),
-          #actionButton(ns("plot_button"), "Generate Scatter Plot"),
           plotOutput(ns("scatter_plot"))
         ),
-        
         
         # Violin plot
         conditionalPanel(
@@ -88,10 +74,10 @@ plots_ui <- function(id) {
                          options = list(placeholder = "Select or search gene names",
                                         maxOptions = 30000,
                                         searchConjunction = 'and')),
-          selectInput(ns("violinGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type_v2"))
+          selectInput(ns("violinGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type"))
         ),
         
-        
+        # Dot plot
         conditionalPanel(
           condition = sprintf("input['%s'] == 'Dot Plot'", ns("plotType")),
           selectizeInput(ns("dotGenes"), "Select Genes for Dot Plot:", choices = NULL, multiple = TRUE, 
@@ -100,18 +86,23 @@ plots_ui <- function(id) {
                                         searchConjunction = 'and')),
           textAreaInput(ns("geneList"), "Paste Genes for Dot Plot (comma or newline separated):", 
                         placeholder = "Enter genes separated by commas or new lines"),
-          selectInput(ns("dotGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type_v2"))
+          selectInput(ns("dotGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type"))
         ),
         width = 3
       ),
+      
+      
       
       mainPanel(
         downloadButton(ns("downloadPlotPNG"), "Download Plot as PNG"),
         width = 9,
         div(class = "square-plot-container",
-            plotOutput(ns("plotOutput"), width = "100%")
+            plotOutput(ns("plotOutput"), 
+                       width = "600px", 
+                       height = "600px")
         )
       )
+      
     )
   )
 }
