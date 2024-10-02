@@ -85,7 +85,7 @@ plots_ui <- function(id) {
                                         maxOptions = 30000,
                                         searchConjunction = 'and')),
           textAreaInput(ns("geneList"), "Paste Genes for Dot Plot (comma or newline separated):", 
-                        placeholder = "Enter genes separated by commas or new lines"),
+                        placeholder = "Enter genes separated by commas"),
           selectInput(ns("dotGroupBy"), "Group By:", choices = c("seurat_clusters", "cell_type"))
         ),
         width = 3

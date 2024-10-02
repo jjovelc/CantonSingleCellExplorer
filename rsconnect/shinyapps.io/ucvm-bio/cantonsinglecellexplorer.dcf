@@ -1,0 +1,10 @@
+name: cantonsinglecellexplorer
+title:
+username: ucvm-bio
+account: ucvm-bio
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12902996
+bundleId: 9174809
+url: https://ucvm-bio.shinyapps.io/cantonsinglecellexplorer/
+version: 1

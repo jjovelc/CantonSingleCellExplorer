@@ -43,7 +43,7 @@ my_palettes <- list(
 palette_names <- names(my_palettes)
 
 # Modify loadSeuratObject to accept a filename
-loadSeuratObject <- function(filename) {
-  setwd('/Users/juanjovel/OneDrive/jj/UofC/data_analysis/jonathanCanton/')
-  readRDS(filename)
+loadSeuratObject <- function(dir, filename) {
+  full_path <- file.path(dir, filename)
+  readRDS(full_path)
 }
